@@ -34,7 +34,27 @@ public class PostController {
     }
 
     /**
+     *
+     * @param paramMap
+     * 1. 전체 조회
+     *  {}
+     * 2. 조건 조회
+     *  {
+     *      "postName" : ""
+     *  }
+     *      or
+     *  {
+     *      "postContent : ""
+     *  }
+     *      or
+     *  {
+     *      "postName" : ""
+     *      "postContent" : ""
+     *  }
+     *
+     *
      * @return
+     *  검색조건 like 문과 or 문의 조합으로 조회
      */
     @PostMapping("")
     public ResponseEntity<?> findPost(@RequestBody Map<String, Object> paramMap) {
@@ -44,7 +64,7 @@ public class PostController {
             postList = postService.findAll();
         }
         else {
-            postList =postService.findPost();
+            postList =postService.findList(paramMap);
         }
 
         return ResponseEntity.ok(postList);

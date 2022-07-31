@@ -4,9 +4,11 @@ import com.board.board.model.Post;
 import com.board.board.model.dto.Result;
 import com.board.board.repository.PostRepository;
 import com.board.board.model.dto.ResultCode;
+import com.board.board.service.specification.PostSpecification;
 import com.board.board.util.ResultUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -39,9 +41,26 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public List<Post> findPostListWithPostName(String postName) {
+    public List<Post> findList(Map<String,Object> paramMap) {
 
-        return null;
+
+        String postName = null;
+        Specification<Post> spec = null;
+        if(paramMap.get("postName") != null){
+            postName = paramMap.get("postName").toString();
+            spec = Specification.where(PostSpecification.likePostName(postName));
+
+        }
+        List<Post> userList = postRepository.findAll(spec);
+        /* 이름 관련 검색 */
+        /*  */
+
+
+//        String postName = paramMap.get("postName").toString();
+//        Specification<Post> spec = Specification.where(PostSpecification.likePostName(postName))
+//                .or(PostSpecification.likePostContent(keyword));
+        /* 내용 관련 검색 */
+        return userList;
 
     }
 

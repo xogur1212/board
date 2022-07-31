@@ -12,7 +12,7 @@ public interface IPostService {
 
     public Post findPostWithPostSeq(Long postSeq);
 
-    public List<Post> findPostListWithPostName(String postName);
+    public List<Post> findList(Map<String,Object> paramMap);
 
     public Result savePost(Post post);
 
